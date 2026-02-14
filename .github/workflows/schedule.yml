@@ -1,0 +1,50 @@
+name: Aggiornamento Orario LIUC
+
+on:
+  workflow_dispatch: # Ti permette di avviarlo manualmente per testare
+  schedule:
+    # Esecuzione automatica 4 volte al giorno
+    - cron: '0 3,11,15,21 * * *'
+
+jobs:
+  update-schedule:
+    runs-on: ubuntu-latest
+    
+    # Diamo all'Action i permessi di scrittura per caricare il file .ics
+    permissions:
+      contents: write
+
+    steps:
+      # 1. Scarica i file della tua repository
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. Installa Python
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # 3. Installa le librerie necessarie
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests icalendar pendulum
+
+      # 4. Esegue lo script (assicurati che il file si chiami Scraper.py)
+      - name: Run Scraper and Generate ICS
+        run: python Scraper.py
+        
+      # 5. Carica il file aggiornato nel repository
+      - name: Commit and Push new ICS file
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          
+          # Aggiunge il file generato (assicurati che il nome coincida con quello nello script Python)
+          git add orario_liuc_completo.ics
+          
+          # Esegue il commit solo se ci sono cambiamenti effettivamente scaricati
+          git commit -m "Auto-update: Orario aggiornato" || echo "Nessuna modifica rilevata"
+          
+          git push
