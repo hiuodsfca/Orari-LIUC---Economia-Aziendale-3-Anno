@@ -78,10 +78,10 @@ BEGIN:VEVENT
 SUMMARY:Strategic Analysis of Italian Business
 DTSTART;TZID=Europe/Rome:20260526T083000
 DTEND;TZID=Europe/Rome:20260526T123000
-UID:LIUC-174890-26052026@orari.liuc.it
+UID:LIUC-178037-26052026@orari.liuc.it
 DESCRIPTION:STATO: ATTIVO\nTipo: Lezione\nDocente: BRUNELLI SOFIA\nCodice:
   A88750\nCorso di Studi: L18A\n
-LOCATION:C116
+LOCATION:C107 - Aula Magna-Bussolati
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:International financial markets
